@@ -117,6 +117,13 @@ Sarthak Revgade
 🎯 IT Student | 🎮 Future Gaming Industry Builder | 💻 Backend & Full-Stack Developer
 Created with guidance and support from ChatGPT 🤝
 
+Images
+ADMIN PANEL
+![admin panel](scr/emp1.png)
+DASHBOARD PANEL
+![dashboar panel](scr/emp2.png)
+
+
 
 ⭐ Show Support
 ⭐ If you like this project, give it a star on GitHub!
