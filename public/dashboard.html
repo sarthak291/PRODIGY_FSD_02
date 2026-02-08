@@ -2,22 +2,270 @@
 <html>
 <head>
   <title>Employee Dashboard</title>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 0;
+      overflow-x: hidden;
+    }
+
+    /* Background Circles */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      filter: blur(15px);
+      z-index: 0;
+    }
+
+    body::before {
+      top: 60px;
+      left: 100px;
+    }
+
+    body::after {
+      bottom: 60px;
+      right: 120px;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 90%;
+      max-width: 900px;
+      padding: 35px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      margin: 0;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logout-btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Section Titles */
+    h3 {
+      color: white;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-left: 4px solid rgba(255, 255, 255, 0.6);
+      padding-left: 10px;
+    }
+
+    /* Form */
+    .form-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    input {
+      padding: 12px 14px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.02);
+    }
+
+    /* Add Button */
+    .add-btn {
+      grid-column: span 2;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .add-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Employee List */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    ul li {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px;
+      margin: 12px 0;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 14px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      transition: 0.3s;
+    }
+
+    ul li:hover {
+      transform: scale(1.02);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .emp-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .emp-info span {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    /* Action Buttons */
+    .actions button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.3s;
+      color: white;
+    }
+
+    .edit-btn {
+      background: linear-gradient(135deg, #f7971e, #ffd200);
+      color: black !important;
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    }
+
+    .actions button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .form-box {
+        grid-template-columns: 1fr;
+      }
+      .add-btn {
+        grid-column: span 1;
+      }
+      ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+  </style>
 </head>
+
 <body>
 
-  <h2>Employee Dashboard</h2>
+  <div class="container">
 
-  <button onclick="logout()">Logout</button>
+    <div class="header">
+      <h2>Employee Dashboard</h2>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
 
-  <h3>Add Employee</h3>
-  <input id="name" placeholder="Name">
-  <input id="email" placeholder="Email">
-  <input id="department" placeholder="Department">
-  <input id="salary" placeholder="Salary">
-  <button onclick="addEmployee()">Add</button>
+    <h3>Add Employee</h3>
 
-  <h3>Employees</h3>
-  <ul id="employeeList"></ul>
+    <div class="form-box">
+      <input id="name" placeholder="Enter Name">
+      <input id="email" placeholder="Enter Email">
+      <input id="department" placeholder="Enter Department">
+      <input id="salary" placeholder="Enter Salary">
+
+      <button class="add-btn" onclick="addEmployee()">+ Add Employee</button>
+    </div>
+
+    <h3>Employees</h3>
+    <ul id="employeeList"></ul>
+
+  </div>
 
   <script src="app.js"></script>
 </body>
